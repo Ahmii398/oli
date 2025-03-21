@@ -12,7 +12,7 @@
       animation: bgAnimation 12s infinite alternate;
       margin: 0;
       padding: 0;
-      color: #000; /* Text color changed to black */
+      color: #000;
       overflow-x: hidden;
     }
 
@@ -24,25 +24,38 @@
     .container {
       max-width: 700px;
       margin: 80px auto;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.7);
       padding: 30px;
       border-radius: 25px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       text-align: center;
       position: relative;
-      animation: fadeIn 2s ease-in-out;
+      z-index: 10;
     }
 
     h1 {
-      font-size: 3em;
-      color: #000;
+      font-size: 2.5em;
+      color: #333;
       text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.7);
+      animation: floatText 3s infinite ease-in-out;
+    }
+
+    @keyframes floatText {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
 
     p {
-      font-size: 1.4em;
+      font-size: 1.2em;
       line-height: 1.6;
-      color: #000;
+      color: #333;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .heart {
@@ -50,6 +63,8 @@
       animation: heartbeat 1.5s infinite alternate;
       display: inline-block;
       margin-top: 20px;
+      color: #ff3366;
+      text-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
     }
 
     @keyframes heartbeat {
@@ -81,24 +96,25 @@
       font-size: 1.8em;
       font-weight: bold;
       margin-top: 20px;
+      color: #ff3366;
       animation: fadeIn 1s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    /* Floating Balloons */
+    /* Balloons */
     .balloons {
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
       left: 0;
       pointer-events: none;
       overflow: hidden;
-      z-index: -1;
+      z-index: 1;
     }
 
     .balloons span {
@@ -127,96 +143,168 @@
       100% { transform: translateY(-100vh) rotate(360deg); }
     }
 
-    .photo-frame {
-      margin: 30px auto;
-      border: 5px solid #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      width: 250px;
-      height: 300px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 2s ease;
-    }
-
-    .photo-frame img {
+    /* Shooting Stars */
+    .shooting-stars {
+      position: fixed;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      overflow: hidden;
+      z-index: 0;
     }
 
-    audio {
-      margin-top: 30px;
+    .shooting-star {
+      position: absolute;
+      width: 3px;
+      height: 80px;
+      background: linear-gradient(-45deg, #fff, rgba(255,255,255,0));
+      animation: shoot 2s infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(0) translateY(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-800px) translateY(800px);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Hearts */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      outline: none;
-      border-radius: 10px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .floating-heart {
+      position: absolute;
+      color: #ff3366;
+      font-size: 20px;
+      animation: floatHearts 6s infinite linear;
+      opacity: 0.8;
+    }
+
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Flip Card */
+    .flip-card {
+      background-color: transparent;
+      width: 300px;
+      height: 200px;
+      perspective: 1000px;
+      margin: 50px auto;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5em;
+      color: white;
+      font-weight: bold;
+    }
+
+    .flip-card-front {
+      background: #ff4d79;
+    }
+
+    .flip-card-back {
+      background: #ffd1dc;
+      color: #333;
+      transform: rotateY(180deg);
     }
 
     footer {
       text-align: center;
       margin-top: 50px;
       font-size: 0.9em;
-      color: #000;
-    }
-
-    /* Slideshow Styles */
-    .slideshow-container {
+      color: #333;
+      z-index: 10;
       position: relative;
-      margin: 20px auto;
-      max-width: 500px;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
 
-    .slides {
-      display: none;
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
+    @media screen and (max-width: 768px) {
+      h1 { font-size: 2em; }
+      p { font-size: 1em; }
+      .btn { padding: 10px 20px; font-size: 1em; }
     }
   </style>
 </head>
 <body>
-  <!-- Floating Balloons -->
+
+  <!-- Balloons -->
   <div class="balloons">
     <span style="left: 10%; animation-delay: 0s;"></span>
-    <span style="left: 20%; animation-delay: 2s;"></span>
-    <span style="left: 30%; animation-delay: 4s;"></span>
-    <span style="left: 40%; animation-delay: 1s;"></span>
-    <span style="left: 50%; animation-delay: 3s;"></span>
-    <span style="left: 60%; animation-delay: 5s;"></span>
-    <span style="left: 70%; animation-delay: 2s;"></span>
-    <span style="left: 80%; animation-delay: 4s;"></span>
+    <span style="left: 25%; animation-delay: 2s;"></span>
+    <span style="left: 40%; animation-delay: 4s;"></span>
+    <span style="left: 55%; animation-delay: 1s;"></span>
+    <span style="left: 70%; animation-delay: 3s;"></span>
+    <span style="left: 85%; animation-delay: 5s;"></span>
   </div>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="happy-birthday-song.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <!-- Shooting Stars -->
+  <div class="shooting-stars" id="shootingStars"></div>
 
+  <!-- Floating Hearts -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Main container -->
   <div class="container">
     <h1>Happy Birthday, Oli mara bacha! 🎂🎉</h1>
     <p>Wishing you a day filled with happiness and a year filled with joy! 💖</p>
-    <p>Thank you for being such a wonderful person in my life. 🌸</p>
-    <p>I hope your birthday is as special as you are! 🌟</p>
+    <p>You make life more colorful and fun! 🌈✨</p>
+    <p>Here's to a fabulous day just like you! 🌟</p>
 
-    <!-- Heartbeat animation -->
     <div class="heart">❤️</div>
 
-    <!-- Photo Slideshow -->
-    <div class="slideshow-container">
-      <img class="slides" src="assets/photo1.jpg" alt="Oli 1">
-      <img class="slides" src="assets/photo2.jpg" alt="Oli 2">
-      <img class="slides" src="assets/photo3.jpg" alt="Oli 3">
-
+    <!-- Flip Card -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          🎁 Hover me!
+        </div>
+        <div class="flip-card-back">
+          You are so special! 💕
+        </div>
+      </div>
     </div>
-
-    <!-- Voice message -->
-    <audio controls>
-      <source src="voice-message.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
 
     <!-- Button + Hidden Message -->
     <button class="btn" onclick="showMessage()">Click here for a surprise!</button>
@@ -227,24 +315,16 @@
     Made with ❤️ by Ahmad Humaiz
   </footer>
 
-  <script>
-    // Background music: Autoplay policies workaround
-    const bgMusic = document.getElementById('bgMusic');
-    bgMusic.muted = true;
-    bgMusic.play().then(() => {
-      bgMusic.muted = false;
-    }).catch((e) => {
-      console.log("Autoplay failed. User interaction is required.", e);
-    });
+  <!-- Confetti and Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-    // Show message function
+  <script>
     function showMessage() {
       const message = document.getElementById('message');
       message.style.display = 'block';
       confetti();
     }
 
-    // Simple confetti effect
     function confetti() {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -262,29 +342,36 @@
         }
 
         const particleCount = 50 * (timeLeft / duration);
-        confettiLib(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 } }));
+        confettiLib(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 }
+        }));
       }, 250);
     }
 
-    // Photo slideshow
-    let slideIndex = 0;
-    slideshow();
+    // Shooting Stars
+    const shootingStars = document.getElementById('shootingStars');
+    setInterval(() => {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      shootingStars.appendChild(star);
+      setTimeout(() => shootingStars.removeChild(star), 2000);
+    }, 800);
 
-    function slideshow() {
-      let i;
-      const slides = document.getElementsByClassName("slides");
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1; }
-      slides[slideIndex - 1].style.display = "block";
-      setTimeout(slideshow, 3000); // Change image every 3 seconds
-    }
+    // Floating Hearts
+    const floatingHearts = document.getElementById('floatingHearts');
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerText = '💖';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+      floatingHearts.appendChild(heart);
+      setTimeout(() => floatingHearts.removeChild(heart), 6000);
+    }, 400);
   </script>
-
-  <!-- Include Canvas Confetti library (CDN link) -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 </body>
 </html>
