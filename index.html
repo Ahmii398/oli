@@ -189,18 +189,18 @@
     .floating-heart {
       position: absolute;
       color: #ff3366;
-      font-size: 20px;
+      font-size: 30px; /* increased base size */
       animation: floatHearts 6s infinite linear;
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     @keyframes floatHearts {
       0% {
-        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        transform: translateY(100vh) scale(0.8) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-10vh) scale(1.5) rotate(360deg);
+        transform: translateY(-10vh) scale(2) rotate(360deg);
         opacity: 0;
       }
     }
@@ -360,17 +360,17 @@
       setTimeout(() => shootingStars.removeChild(star), 2000);
     }, 800);
 
-    // Floating Hearts
+    // Floating Hearts - increased size & amount
     const floatingHearts = document.getElementById('floatingHearts');
     setInterval(() => {
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
       heart.innerText = '💖';
       heart.style.left = Math.random() * 100 + '%';
-      heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+      heart.style.fontSize = Math.random() * 40 + 20 + 'px'; // Bigger hearts!
       floatingHearts.appendChild(heart);
       setTimeout(() => floatingHearts.removeChild(heart), 6000);
-    }, 400);
+    }, 200); // More hearts faster!
   </script>
 
 </body>
